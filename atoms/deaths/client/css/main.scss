@@ -1,0 +1,154 @@
+@import "fonts";
+@import "mq";
+@import "palette";
+@import "enhancer";
+
+.interactive-atom {
+    margin: 0;
+    padding: 0;
+}
+
+.interactive-wrapper{
+
+	position: relative;
+
+	background: white;
+
+}
+
+.charts-container{
+
+		display: flex;
+		flex-wrap: wrap;
+		margin-bottom: 12px;
+
+		max-height: 30em;
+	    overflow: hidden;
+
+	    &:after {
+	        content: '';
+	        position: absolute;
+	        left: 0;
+	        right: 0;
+	        bottom: 0;
+	        height: 4.5em;
+	        background: rgb(255,255,255);
+	        background: linear-gradient(0deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.9) 40%, rgba(255,255,255,0) 100%);
+	    }
+
+	    &.show-full {
+	        max-height: unset;
+	        overflow: visible;
+
+	        &:after {
+	            display: none;
+	        }
+	    }
+
+}
+
+.gv-chart-wrapper{
+
+	margin-right: 5px;
+
+	@include mq($from: 100px, $until: 400px) {
+		flex-basis: 100%;
+	}
+	@include mq($from: 400px, $until: 899px) {
+		flex-basis: calc(33% - 5px);
+	}
+	@include mq($from: 900px) {
+		flex-basis: calc(25% - 5px);
+	}
+
+	h3{
+		font-family: "Guardian Headline","Guardian Egyptian Web","Guardian Headline Full",Georgia,serif;
+		font-weight: 900;
+		margin-bottom: 1px;			    
+	}
+	
+	text{
+		@include fs-textSans(2);
+		margin-bottom: 3px;
+		margin: 0;
+		margin-top: 6px;
+		fill:$neutral-46;
+	}
+
+	.midtext{
+		@include fs-textSans(2);
+	}
+	
+	p{
+		@include fs-textSans(2);
+		margin-bottom: 3px;
+		margin: 0px;
+	}
+
+}
+
+#button-show-more {
+    position: absolute;
+    display: inline-block;
+    bottom: 0.85em;
+    left: 0px;
+    width: auto;
+    padding: 0.4em 1em 0.4em 2.1em;
+    z-index: 2;
+    vertical-align: top;
+    text-decoration: none;
+    border-radius: 62.5rem;
+    border: 1px solid transparent;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    cursor: pointer;
+    @include fs-textSans(3);
+    background: $neutral-7;
+    color: #fff;
+
+    &:hover {
+        background: $neutral-20;
+    }
+
+    svg {
+        display: inline-block;
+        width: 1rem;
+        height: 1rem;
+        left: 0.85rem;
+        vertical-align: middle;
+        margin: auto;
+        margin-right: 0.5em;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        fill: white;
+    }
+
+    .text {
+        display: inline-block;
+        margin-left: 0.5em;
+        margin-top: 2px;
+    }
+
+    svg.inline-minus__svg {
+        display: none;
+    }
+    &.fewer {
+        position: relative;
+        bottom: 0;
+        border-color: $neutral-7;
+        background: white;
+        color: $neutral-7;
+        &:hover {
+            background: $neutral-96;
+        }
+        svg.inline-plus__svg {
+            display: none;
+        }
+        svg.inline-minus__svg {
+            display: inline-block;
+            fill: $neutral-7;
+        }
+    }
+}
+		

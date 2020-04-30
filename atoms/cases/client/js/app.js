@@ -170,6 +170,23 @@ d3.csv('https://interactive.guim.co.uk/2020/coronavirus-jh-timeline-data/time_se
 	    let sumByDate = d3.sum(france, d => d[date])
 	    	franceRaw.cases.push({date: date, acum: sumByDate, new: i == 0 ? sumByDate : sumByDate - sumByDatePrev, weekly:0})
   	})
+
+  	const netherlands = casesRaw.filter(place => place["Country/Region"] === 'Netherlands');
+  
+  	let netherlandsRaw = { country:'Netherlands', cases: []};
+  
+  	let netherlandsSum = dates.map((date,i) => {
+    
+	    let sumByDatePrev;
+
+	    if(i>0)
+	    {
+	      sumByDatePrev = d3.sum(netherlands, d => d[dates[i-1]])
+	    }
+	    
+	    let sumByDate = d3.sum(netherlands, d => d[date])
+	    	netherlandsRaw.cases.push({date: date, acum: sumByDate, new: i == 0 ? sumByDate : sumByDate - sumByDatePrev, weekly:0})
+  	})
   
   
   
@@ -179,6 +196,7 @@ d3.csv('https://interactive.guim.co.uk/2020/coronavirus-jh-timeline-data/time_se
 	  .filter(place => place['Country/Region'] != 'China')
 	  .filter(place => place['Country/Region'] != 'United Kingdom')
 	  .filter(place => place['Country/Region'] != 'France')
+	  .filter(place => place['Country/Region'] != 'Netherlands')
 	  .map((p,i) => {
 	    
 	    places.push({province:p['Province/State'], country:p['Country/Region'], lat:p.Lat, lon:p.Long, cases:[]})
@@ -192,6 +210,7 @@ d3.csv('https://interactive.guim.co.uk/2020/coronavirus-jh-timeline-data/time_se
 	 places.push(chinaRaw)
 	 places.push(ukRaw)
 	 places.push(franceRaw)
+	 places.push(netherlandsRaw)
 
   
   
@@ -239,6 +258,7 @@ const makeChart = (con) =>{
       .html('Week average: ' + numberWithCommas(avg.toFixed(1)))
 
       let svg = div.append("svg")
+      .attr('id', 'gv-cases-chart-' + con.country)
       .attr("viewBox", [0, 0, chartW, chartH]);
 
       yScale.domain([0, d3.max(con.cases, d => d.weekly)])
